@@ -42,7 +42,7 @@ fetchDoctors();
             </header>
 
             <!-- Doctors -->
-            <ul v-if="doctors.length" class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+            <ul v-if="doctors.length" class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <li v-for="doctor in doctors" :key="doctor.id" class="col mb-3">
                     <DoctorCard :doctor="doctor" />
                 </li>

@@ -29,12 +29,16 @@ const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-place
         <!-- Card Body -->
         <div>
             <strong>Specializzazioni:</strong>
-            <ul class="mb-3">
-                <li v-for="typology in doctor.profile.typologies" :key="typology.id">{{ typology.name }}</li>
+            <ul class="row row-cols-2 mb-3">
+                <li v-for="typology in doctor.profile.typologies" :key="typology.id" class="col">{{ typology.name }}</li>
             </ul>
+
+            <hr>
 
             <strong>Servizi:</strong>
             <p>{{ doctor.profile.services }}</p>
+
+            <hr>
 
             <strong>Bio:</strong>
             <p>{{ doctor.profile.description }}</p>
