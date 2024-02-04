@@ -38,8 +38,12 @@
 
 .app-header {
     height: $header-height;
+    position: sticky;
+    top: 0;
 
+    background-color: $col-light;
     border-bottom: 1px solid $col-gray-500;
+    z-index: 1;
 
     .container-fluid {
         display: flex;
