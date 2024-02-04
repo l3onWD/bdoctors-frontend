@@ -10,11 +10,14 @@
 
             <!-- Brand -->
             <RouterLink :to="{ name: 'home' }" class="app-header-brand">
-                <h2 class="mb-0">BDoctors</h2>
+                <h2 class="mb-0">
+                    <span class="d-none d-md-inline">BDoctors</span>
+                    <span class="d-md-none">BD</span>
+                </h2>
             </RouterLink>
 
             <!-- SearchBox -->
-            <div class="app-header-search">
+            <div class="app-header-search me-auto">
                 <input type="text" id="search-typologies" class="form-control" placeholder="Specializzazione"
                     autocomplete="off">
             </div>
