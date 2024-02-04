@@ -1,10 +1,13 @@
-<script>
+<script setup>
+//*** COMPONENTS ***//
+import AppHeader from '@/components/AppHeader.vue';
+import AppMain from '@/components/AppMain.vue';
+
 </script>
 
 <template>
-    <main>
-        <h1>Hello World</h1>
-    </main>
+    <AppHeader />
+    <AppMain />
 </template>
 
 <style lang="scss">
