@@ -4,6 +4,7 @@ import { apiClient } from '@/http';
 
 
 //*** COMPONENTS ***//
+import AppLoader from '@/components/AppLoader.vue';
 import DoctorCard from '@/components/doctors/DoctorCard.vue';
 
 
@@ -50,6 +51,7 @@ fetchDoctors();
             <div v-else>Non ci sono risultati.</div>
         </div>
 
+        <AppLoader v-if="isLoading" />
     </section>
 </template>
 
