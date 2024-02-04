@@ -55,6 +55,7 @@ const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-place
 
     border: 1px solid $col-gray-500;
     border-radius: 1rem;
+    box-shadow: 0 0 8px rgba($color: $col-dark, $alpha: 0.2);
 
     &-photo {
         width: 50px;
