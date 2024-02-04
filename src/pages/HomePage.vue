@@ -37,13 +37,13 @@ fetchDoctors();
         <div v-if="!isLoading">
 
             <!-- Section Title -->
-            <header>
-                <h2>Dottori in evidenza</h2>
+            <header class="mb-3">
+                <h3>In evidenza</h3>
             </header>
 
             <!-- Doctors -->
-            <ul v-if="doctors.length" class="row row-cols-2">
-                <li v-for="doctor in doctors" :key="doctor.id" class="col">
+            <ul v-if="doctors.length" class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+                <li v-for="doctor in doctors" :key="doctor.id" class="col mb-3">
                     <DoctorCard :doctor="doctor" />
                 </li>
             </ul>
