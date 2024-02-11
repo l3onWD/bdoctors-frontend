@@ -5,9 +5,14 @@
 
 <template>
     <div class="search-box">
-        <i class="fas fa-search fa-fw search-box-icon"></i>
+
+        <button class="search-box-icon"><i class="fas fa-search fa-fw"></i></button>
+
         <input type="text" id="search-typologies" class="form-control search-box-input" placeholder="Specializzazione"
             autocomplete="off">
+
+        <button class="search-box-reset"><i class="fas fa-close fa-fw"></i></button>
+
     </div>
 </template>
 
@@ -17,14 +22,30 @@
     position: relative;
 
     &-icon {
+        padding: 0.5rem;
         position: absolute;
         top: 50%;
-        left: 0.5rem;
+        left: 0;
         transform: translateY(-50%);
+
+        background-color: transparent;
+        border: none;
     }
 
     &-input {
-        padding-left: 2rem;
+        padding: 0 2.5rem;
+        height: 2.5rem;
+    }
+
+    &-reset {
+        padding: 0.5rem;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+
+        background-color: transparent;
+        border: none;
     }
 
 }
