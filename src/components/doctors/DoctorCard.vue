@@ -41,7 +41,7 @@ const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.p
             <p class="mb-2"><i class="fas fa-comment"></i><span class="ms-1">{{ doctor.reviews_count }}</span></p>
 
             <!-- Typologies -->
-            <strong>Specializzazioni:</strong>
+            <strong>Specializzazioni</strong>
             <ul class="d-flex flex-wrap gap-2 mt-2 mb-3">
                 <li v-for="typology in doctor.typologies" :key="typology.id" :title="typology.name">
                     <i class="fa-lg" :class="typology.icon"></i>
@@ -51,13 +51,13 @@ const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.p
             <hr>
 
             <!-- Services -->
-            <strong>Servizi:</strong>
+            <strong>Servizi</strong>
             <p>{{ doctor.services }}</p>
 
             <hr>
 
             <!-- Description -->
-            <strong>Bio:</strong>
+            <strong>Bio</strong>
             <p>{{ doctor.description }}</p>
         </div>
     </div>
