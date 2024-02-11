@@ -46,6 +46,13 @@ const searchTypologies = () => {
         });
 }
 
+
+//*** SEARCH RESET ***//
+const searchReset = () => {
+    searchInput.value = '';
+    typologies.value = [];
+}
+
 </script>
 
 
@@ -59,7 +66,7 @@ const searchTypologies = () => {
         <input v-model.trim="searchInput" type="text" class="form-control search-box-input" placeholder="Specializzazione"
             autocomplete="off" @input="searchThrottle">
 
-        <button v-if="searchInput" class="search-box-reset" @click="searchInput = ''">
+        <button v-if="searchInput" class="search-box-reset" @click="searchReset">
             <i class="fas fa-close fa-fw"></i>
         </button>
 
