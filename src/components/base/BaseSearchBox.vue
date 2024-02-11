@@ -84,6 +84,7 @@ watch(isSearchPage, (isSearchPage) => {
         searchReset();
     } else {
         searchTerm.value = route.query.typologyName;
+        searchTypologies();
     }
 });
 
@@ -91,7 +92,7 @@ watch(isSearchPage, (isSearchPage) => {
 
 
 <template>
-    <div v-click-outside="removeActive" class="search-box">
+    <form @submit.prevent="searchTypologies" v-click-outside="removeActive" class="search-box" novalidate>
 
         <!-- Icon -->
         <button class="search-box-icon">
@@ -99,8 +100,8 @@ watch(isSearchPage, (isSearchPage) => {
         </button>
 
         <!-- Search Input -->
-        <input v-model.trim="searchTerm" type="text" class="form-control search-box-input" placeholder="Specializzazione"
-            autocomplete="off" @input="searchThrottle" @focusin="isActive = true">
+        <input v-model.trim="searchTerm" type="text" id="search-typology" class="form-control search-box-input"
+            placeholder="Specializzazione" autocomplete="off" @input="searchThrottle" @focusin="isActive = true">
 
         <!-- Reset Button -->
         <button v-if="searchTerm" type="button" class="search-box-reset" @click="searchReset">
@@ -127,7 +128,7 @@ watch(isSearchPage, (isSearchPage) => {
             </ul>
 
         </div>
-    </div>
+    </form>
 </template>
 
 

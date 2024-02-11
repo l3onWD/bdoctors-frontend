@@ -49,7 +49,7 @@ watch(routeQuery, () => {
 
             <!-- Section Title -->
             <header class="mb-3">
-                <h3>Risultati:</h3>
+                <h3>Risultati per: {{ route.query.typologyName }}</h3>
             </header>
 
             <!-- Doctors -->
