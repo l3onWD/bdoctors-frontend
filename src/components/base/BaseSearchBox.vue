@@ -111,8 +111,11 @@ watch(isSearchPage, (isSearchPage) => {
         <!-- Suggests -->
         <div v-if="isActive" class="search-box-suggests">
 
+            <!-- Loader -->
+            <div v-if="isLoading" class="text-center p-2"><i class="fas fa-spinner fa-spin-pulse fa-lg"></i></div>
+
             <!-- Fetched -->
-            <ul v-if="typologies.length" class="suggests-fetched">
+            <ul v-else-if="typologies.length" class="suggests-fetched">
                 <li v-for="typology in typologies" :key="typology.id" @click="setTypology(typology)">
                     <i class="fa-fw" :class="typology.icon"></i>
                     <span>{{ typology.name }}</span>
@@ -126,6 +129,9 @@ watch(isSearchPage, (isSearchPage) => {
                 </li>
                 <li>Test</li>
             </ul>
+
+            <!-- No results -->
+            <div v-else class="text-danger fw-bold p-2">Nessun risultato.</div>
 
         </div>
     </form>
