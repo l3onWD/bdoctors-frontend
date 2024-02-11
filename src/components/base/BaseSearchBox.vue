@@ -22,7 +22,7 @@
     position: relative;
 
     &-icon {
-        padding: 0.5rem;
+        padding: 0.25rem;
         position: absolute;
         top: 50%;
         left: 0;
@@ -33,12 +33,12 @@
     }
 
     &-input {
-        padding: 0 2.5rem;
+        padding: 0 1.8rem;
         height: 2.5rem;
     }
 
     &-reset {
-        padding: 0.5rem;
+        padding: 0.25rem;
         position: absolute;
         top: 50%;
         right: 0;
