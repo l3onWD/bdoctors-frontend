@@ -7,8 +7,12 @@ import { apiClient } from '@/http';
 //*** SEARCH THROTTLE ***//
 const searchThrottleTime = 500;
 const searchThrottleCounter = ref(null);
+const isLoading = ref(false);
+
 
 const searchThrottle = () => {
+
+    isLoading.value = true;
 
     // Throttle Logic
     clearTimeout(searchThrottleCounter.value);
@@ -20,7 +24,6 @@ const searchThrottle = () => {
 
 
 //*** SEARCH TYPOLOGIES ***//
-const isLoading = ref(false);
 const searchTerm = ref('');
 const typologies = ref([]);
 
@@ -28,7 +31,6 @@ const searchTypologies = () => {
 
     // Data
     const params = { name: searchTerm.value };
-    isLoading.value = true;
 
     // Fetching
     apiClient.get('/typologies/search', { params })
@@ -114,14 +116,6 @@ watch(isSearchPage, (isSearchPage) => {
             <!-- Loader -->
             <div v-if="isLoading" class="text-center p-2"><i class="fas fa-spinner fa-spin-pulse fa-lg"></i></div>
 
-            <!-- Fetched -->
-            <ul v-else-if="typologies.length" class="suggests-fetched">
-                <li v-for="typology in typologies" :key="typology.id" @click="setTypology(typology)">
-                    <i class="fa-fw" :class="typology.icon"></i>
-                    <span>{{ typology.name }}</span>
-                </li>
-            </ul>
-
             <!-- Recents -->
             <ul v-else-if="!searchTerm">
                 <li>
@@ -130,8 +124,18 @@ watch(isSearchPage, (isSearchPage) => {
                 <li>Test</li>
             </ul>
 
-            <!-- No results -->
-            <div v-else class="text-danger fw-bold p-2">Nessun risultato.</div>
+            <!-- Fetched -->
+            <div v-else>
+                <ul v-if="typologies.length" class="suggests-fetched">
+                    <li v-for="typology in typologies" :key="typology.id" @click="setTypology(typology)">
+                        <i class="fa-fw" :class="typology.icon"></i>
+                        <span>{{ typology.name }}</span>
+                    </li>
+                </ul>
+
+                <!-- No results -->
+                <div v-else class="text-danger fw-bold p-2">Nessun risultato.</div>
+            </div>
 
         </div>
     </form>
