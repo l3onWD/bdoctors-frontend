@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { apiClient } from '@/http';
 
 
@@ -59,7 +59,7 @@ const removeActive = () => {
 }
 
 
-//*** HANDLE TYPOLOGY SEARCH ***//
+//*** HANDLE SELECTED TYPOLOGY ***//
 const router = useRouter();
 
 const setTypology = (typology) => {
@@ -71,8 +71,21 @@ const setTypology = (typology) => {
     removeActive();
 
     // Go to search page
-    router.push({ name: 'search', query: { 'typologies[]': typology.id } })
+    router.push({ name: 'search', query: { typologyName: typology.name, 'typologies[]': typology.id } })
 }
+
+
+//*** HANDLE PAGE CHANGE ***//
+const route = useRoute();
+const isSearchPage = computed(() => route.name === 'search');
+
+watch(isSearchPage, (isSearchPage) => {
+    if (!isSearchPage) {
+        searchReset();
+    } else {
+        searchTerm.value = route.query.typologyName;
+    }
+});
 
 </script>
 
@@ -106,7 +119,7 @@ const setTypology = (typology) => {
             </ul>
 
             <!-- Recents -->
-            <ul v-else>
+            <ul v-else-if="!searchTerm">
                 <li>
                     <h6>Recenti</h6>
                 </li>
