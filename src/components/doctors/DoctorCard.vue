@@ -30,12 +30,15 @@ const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.p
         <!-- Card Body -->
         <div>
 
-            <!-- Vote -->
+            <!-- Avg Vote -->
             <div class="d-flex align-items-center mb-2">
                 <i v-for="n in 5" :key="n" class="fa-star text-warning"
                     :class="n <= doctor.stars_avg_vote ? 'fas' : 'far'"></i>
-                <span class="ms-2">({{ doctor.stars_count }})</span>
+                <span class="ms-1">({{ doctor.stars_count }})</span>
             </div>
+
+            <!-- Reviews Count -->
+            <p class="mb-2"><i class="fas fa-comment"></i><span class="ms-1">{{ doctor.reviews_count }}</span></p>
 
             <!-- Typologies -->
             <strong>Specializzazioni:</strong>
