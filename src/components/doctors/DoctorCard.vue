@@ -42,8 +42,10 @@ const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.p
 
             <!-- Typologies -->
             <strong>Specializzazioni:</strong>
-            <ul class="row row-cols-2 mb-3">
-                <li v-for="typology in doctor.typologies" :key="typology.id" class="col">{{ typology.name }}</li>
+            <ul class="d-flex flex-wrap gap-2 mt-2 mb-3">
+                <li v-for="typology in doctor.typologies" :key="typology.id" :title="typology.name">
+                    <i class="fa-lg" :class="typology.icon"></i>
+                </li>
             </ul>
 
             <hr>
