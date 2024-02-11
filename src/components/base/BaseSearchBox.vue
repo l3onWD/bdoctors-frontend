@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { apiClient } from '@/http';
 
 
@@ -44,24 +45,40 @@ const searchTypologies = () => {
 
 
 //*** SEARCH RESET ***//
-const serchInput = ref(null);
-
 const searchReset = () => {
     searchTerm.value = '';
     typologies.value = [];
-
-    serchInput.value.focus();
 }
 
 
-//*** SEARCH ACTIVE ***//
+//*** HANDLE ACTIVE ***//
 const isActive = ref(false);
+
+const removeActive = () => {
+    isActive.value = false;
+}
+
+
+//*** HANDLE TYPOLOGY SEARCH ***//
+const router = useRouter();
+
+const setTypology = (typology) => {
+
+    // Set selected typology data
+    searchTerm.value = typology.name;
+    typologies.value = [typology];
+
+    removeActive();
+
+    // Go to search page
+    router.push({ name: 'search', query: { 'typologies[]': typology.id } })
+}
 
 </script>
 
 
 <template>
-    <div class="search-box">
+    <div v-click-outside="removeActive" class="search-box">
 
         <!-- Icon -->
         <button class="search-box-icon">
@@ -70,11 +87,10 @@ const isActive = ref(false);
 
         <!-- Search Input -->
         <input v-model.trim="searchTerm" type="text" class="form-control search-box-input" placeholder="Specializzazione"
-            autocomplete="off" @input="searchThrottle" @focusin="isActive = true" @focusout="isActive = false"
-            ref="serchInput">
+            autocomplete="off" @input="searchThrottle" @focusin="isActive = true">
 
         <!-- Reset Button -->
-        <button v-if="searchTerm" class="search-box-reset" @click="searchReset">
+        <button v-if="searchTerm" type="button" class="search-box-reset" @click="searchReset">
             <i class="fas fa-close fa-fw"></i>
         </button>
 
@@ -83,7 +99,7 @@ const isActive = ref(false);
 
             <!-- Fetched -->
             <ul v-if="typologies.length" class="suggests-fetched">
-                <li v-for="typology in typologies" :key="typology.id">
+                <li v-for="typology in typologies" :key="typology.id" @click="setTypology(typology)">
                     <i class="fa-fw" :class="typology.icon"></i>
                     <span>{{ typology.name }}</span>
                 </li>
