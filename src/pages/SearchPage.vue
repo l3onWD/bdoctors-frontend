@@ -55,7 +55,7 @@ watch(routeQuery, () => {
             <!-- Doctors -->
             <ul v-if="doctors.length" class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <li v-for="doctor in doctors" :key="doctor.id" class="col mb-3">
-                    <DoctorCard :doctor="doctor" />
+                    <DoctorCard :doctor="doctor" :selectedTypology="Number(route.query['typologies[]'])" />
                 </li>
             </ul>
             <div v-else>Non ci sono risultati.</div>

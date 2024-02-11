@@ -6,6 +6,10 @@ const props = defineProps({
     doctor: {
         type: Object,
         required: true
+    },
+    selectedTypology: {
+        type: Number,
+        default: null
     }
 });
 
@@ -43,7 +47,8 @@ const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.p
             <!-- Typologies -->
             <strong>Specializzazioni</strong>
             <ul class="d-flex flex-wrap gap-2 mt-2 mb-3">
-                <li v-for="typology in doctor.typologies" :key="typology.id" :title="typology.name">
+                <li v-for="typology in doctor.typologies" :key="typology.id" :title="typology.name"
+                    :class="{ 'text-danger': props.selectedTypology === typology.id }">
                     <i class="fa-lg" :class="typology.icon"></i>
                 </li>
             </ul>
