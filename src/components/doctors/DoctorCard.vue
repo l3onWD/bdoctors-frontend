@@ -9,8 +9,9 @@ const props = defineProps({
     }
 });
 
-//*** PHOTO ***//
-const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-placeholder.png');
+//*** COMPUTED ***//
+const doctorFullname = computed(() => `${props.doctor.user.first_name} ${props.doctor.user.last_name}`);
+const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.png');
 
 </script>
 
@@ -21,27 +22,38 @@ const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-place
         <div class="d-flex gap-3 mb-2">
             <img :src="photoUrl" alt="Profile Picture" class="doctor-card-photo">
             <div>
-                <h5>{{ doctor.first_name + ' ' + doctor.last_name }}</h5>
-                <p><i class="fas fa-location-dot"></i> {{ doctor.profile.address }}</p>
+                <h5>{{ doctorFullname }}</h5>
+                <p><i class="fas fa-location-dot"></i> {{ doctor.address }}</p>
             </div>
         </div>
 
         <!-- Card Body -->
         <div>
+
+            <!-- Vote -->
+            <div class="d-flex align-items-center mb-2">
+                <i v-for="n in 5" :key="n" class="fa-star text-warning"
+                    :class="n <= doctor.stars_avg_vote ? 'fas' : 'far'"></i>
+                <span class="ms-2">({{ doctor.stars_count }})</span>
+            </div>
+
+            <!-- Typologies -->
             <strong>Specializzazioni:</strong>
             <ul class="row row-cols-2 mb-3">
-                <li v-for="typology in doctor.profile.typologies" :key="typology.id" class="col">{{ typology.name }}</li>
+                <li v-for="typology in doctor.typologies" :key="typology.id" class="col">{{ typology.name }}</li>
             </ul>
 
             <hr>
 
+            <!-- Services -->
             <strong>Servizi:</strong>
-            <p>{{ doctor.profile.services }}</p>
+            <p>{{ doctor.services }}</p>
 
             <hr>
 
+            <!-- Description -->
             <strong>Bio:</strong>
-            <p>{{ doctor.profile.description }}</p>
+            <p>{{ doctor.description }}</p>
         </div>
     </div>
 </template>
