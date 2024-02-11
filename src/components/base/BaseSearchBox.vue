@@ -72,6 +72,9 @@ const setTypology = (typology) => {
 
     removeActive();
 
+    // Update storage
+    storeRecentTypologies(typology);
+
     // Go to search page
     router.push({ name: 'search', query: { typologyName: typology.name, 'typologies[]': typology.id } })
 }
@@ -89,6 +92,25 @@ watch(isSearchPage, (isSearchPage) => {
         searchTypologies();
     }
 });
+
+
+//*** RECENT SEARCH ***//
+const recentTypologies = ref(JSON.parse(localStorage.getItem('recentTypologies')) || []);
+
+const storeRecentTypologies = typology => {
+
+    // Check if is already present
+    if (recentTypologies.value.some(({ id }) => typology.id === id)) return
+
+    // Update list
+    recentTypologies.value.push(typology);
+
+    // Remove the first item if list has more than 3 items
+    if (recentTypologies.value.length > 3) recentTypologies.value.shift();
+
+    // Set storage
+    localStorage.setItem('recentTypologies', JSON.stringify(recentTypologies.value));
+}
 
 </script>
 
@@ -119,9 +141,12 @@ watch(isSearchPage, (isSearchPage) => {
             <!-- Recents -->
             <ul v-else-if="!searchTerm">
                 <li>
-                    <h6>Recenti</h6>
+                    <h6 class="mb-0">Recenti</h6>
                 </li>
-                <li>Test</li>
+                <li v-for="typology in recentTypologies" :key="typology.id" @click="setTypology(typology)">
+                    <i class="far fa-clock fa-fw"></i>
+                    <span>{{ typology.name }}</span>
+                </li>
             </ul>
 
             <!-- Fetched -->
