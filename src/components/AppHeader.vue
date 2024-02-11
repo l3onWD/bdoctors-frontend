@@ -1,4 +1,6 @@
 <script setup>
+//*** COMPONENTS ***//
+import BaseSearchBox from '@/components/base/BaseSearchBox.vue';
 
 </script>
 
@@ -18,8 +20,7 @@
 
             <!-- SearchBox -->
             <div class="app-header-search me-auto">
-                <input type="text" id="search-typologies" class="form-control" placeholder="Specializzazione"
-                    autocomplete="off">
+                <BaseSearchBox />
             </div>
 
             <!-- Menu -->
