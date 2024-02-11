@@ -9,10 +9,6 @@ const searchThrottleCounter = ref(null);
 
 const searchThrottle = () => {
 
-    // Input Validation
-    if (searchInput.value.length < 2) return;
-
-
     // Throttle Logic
     clearTimeout(searchThrottleCounter.value);
 
@@ -24,13 +20,13 @@ const searchThrottle = () => {
 
 //*** SEARCH TYPOLOGIES ***//
 const isLoading = ref(false);
-const searchInput = ref('');
+const searchTerm = ref('');
 const typologies = ref([]);
 
 const searchTypologies = () => {
 
     // Data
-    const params = { name: searchInput.value };
+    const params = { name: searchTerm.value };
     isLoading.value = true;
 
     // Fetching
@@ -48,10 +44,18 @@ const searchTypologies = () => {
 
 
 //*** SEARCH RESET ***//
+const serchInput = ref(null);
+
 const searchReset = () => {
-    searchInput.value = '';
+    searchTerm.value = '';
     typologies.value = [];
+
+    serchInput.value.focus();
 }
+
+
+//*** SEARCH ACTIVE ***//
+const isActive = ref(false);
 
 </script>
 
@@ -59,22 +63,48 @@ const searchReset = () => {
 <template>
     <div class="search-box">
 
+        <!-- Icon -->
         <button class="search-box-icon">
             <i class="fas fa-search fa-fw"></i>
         </button>
 
-        <input v-model.trim="searchInput" type="text" class="form-control search-box-input" placeholder="Specializzazione"
-            autocomplete="off" @input="searchThrottle">
+        <!-- Search Input -->
+        <input v-model.trim="searchTerm" type="text" class="form-control search-box-input" placeholder="Specializzazione"
+            autocomplete="off" @input="searchThrottle" @focusin="isActive = true" @focusout="isActive = false"
+            ref="serchInput">
 
-        <button v-if="searchInput" class="search-box-reset" @click="searchReset">
+        <!-- Reset Button -->
+        <button v-if="searchTerm" class="search-box-reset" @click="searchReset">
             <i class="fas fa-close fa-fw"></i>
         </button>
 
+        <!-- Suggests -->
+        <div v-if="isActive" class="search-box-suggests">
+
+            <!-- Fetched -->
+            <ul v-if="typologies.length" class="suggests-fetched">
+                <li v-for="typology in typologies" :key="typology.id">
+                    <i class="fa-fw" :class="typology.icon"></i>
+                    <span>{{ typology.name }}</span>
+                </li>
+            </ul>
+
+            <!-- Recents -->
+            <ul v-else>
+                <li>
+                    <h6>Recenti</h6>
+                </li>
+                <li>Test</li>
+            </ul>
+
+        </div>
     </div>
 </template>
 
 
 <style lang="scss" scoped>
+@use '@/assets/scss/vars' as *;
+
 .search-box {
     position: relative;
 
@@ -103,6 +133,39 @@ const searchReset = () => {
 
         background-color: transparent;
         border: none;
+    }
+
+    &-suggests {
+        position: absolute;
+        top: calc(100% + 0.25rem);
+        left: 0;
+        min-height: 2.5rem;
+        max-height: 200px;
+        width: 100%;
+
+        background-color: $col-light;
+        border: 1px solid $col-gray-500;
+        border-radius: 0.5rem;
+        overflow-y: auto;
+
+        h6 {
+            font-size: 0.8rem;
+        }
+
+        ul {
+            li {
+                padding: 0.5rem 1rem;
+
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+
+                &:hover:not(:has(h6)) {
+                    background-color: $col-gray-500;
+                }
+            }
+        }
     }
 
 }
