@@ -6,11 +6,16 @@ const props = defineProps({
     doctor: {
         type: Object,
         required: true
+    },
+    selectedTypology: {
+        type: Number,
+        default: null
     }
 });
 
-//*** PHOTO ***//
-const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-placeholder.png');
+//*** COMPUTED ***//
+const doctorFullname = computed(() => `${props.doctor.user.first_name} ${props.doctor.user.last_name}`);
+const photoUrl = computed(() => props.doctor.photo || 'img/profile-placeholder.png');
 
 </script>
 
@@ -21,27 +26,44 @@ const photoUrl = computed(() => props.doctor.profile.photo || 'img/profile-place
         <div class="d-flex gap-3 mb-2">
             <img :src="photoUrl" alt="Profile Picture" class="doctor-card-photo">
             <div>
-                <h5>{{ doctor.first_name + ' ' + doctor.last_name }}</h5>
-                <p><i class="fas fa-location-dot"></i> {{ doctor.profile.address }}</p>
+                <h5>{{ doctorFullname }}</h5>
+                <p><i class="fas fa-location-dot"></i> {{ doctor.address }}</p>
             </div>
         </div>
 
         <!-- Card Body -->
         <div>
-            <strong>Specializzazioni:</strong>
-            <ul class="row row-cols-2 mb-3">
-                <li v-for="typology in doctor.profile.typologies" :key="typology.id" class="col">{{ typology.name }}</li>
+
+            <!-- Avg Vote -->
+            <div class="d-flex align-items-center mb-2">
+                <i v-for="n in 5" :key="n" class="fa-star text-warning"
+                    :class="n <= doctor.stars_avg_vote ? 'fas' : 'far'"></i>
+                <span class="ms-1">({{ doctor.stars_count }})</span>
+            </div>
+
+            <!-- Reviews Count -->
+            <p class="mb-2"><i class="fas fa-comment"></i><span class="ms-1">{{ doctor.reviews_count }}</span></p>
+
+            <!-- Typologies -->
+            <strong>Specializzazioni</strong>
+            <ul class="d-flex flex-wrap gap-2 mt-2 mb-3">
+                <li v-for="typology in doctor.typologies" :key="typology.id" :title="typology.name"
+                    :class="{ 'text-danger': props.selectedTypology === typology.id }">
+                    <i class="fa-lg" :class="typology.icon"></i>
+                </li>
             </ul>
 
             <hr>
 
-            <strong>Servizi:</strong>
-            <p>{{ doctor.profile.services }}</p>
+            <!-- Services -->
+            <strong>Servizi</strong>
+            <p>{{ doctor.services }}</p>
 
             <hr>
 
-            <strong>Bio:</strong>
-            <p>{{ doctor.profile.description }}</p>
+            <!-- Description -->
+            <strong>Bio</strong>
+            <p>{{ doctor.description }}</p>
         </div>
     </div>
 </template>
